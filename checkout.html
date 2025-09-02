@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | OncesTech Store</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        /* --- CSS Variables (Theme Colors & Settings) --- */
+        :root {
+            --light-gray-bg: #f5f5f5;
+            --border-color: #e0e0e0;
+            --text-muted: #6c757d;
+            --accent-green: #008a00;
+            --continue-btn-bg: #007661;
+            --required-red: #d9534f;
+            --error-bg: #fde8e8;
+            --dark-header: #212529;
+        }
+
+        /* --- General Body & Layout --- */
+        body {
+            background-color: var(--light-gray-bg);
+            font-family: Arial, sans-serif;
+        }
+
+        .checkout-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .content-card {
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+        }
+
+        /* --- Step Indicators --- */
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-indicator .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid var(--border-color);
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 0.75rem;
+        }
+
+        .step-indicator.active .step-number {
+            border-color: black;
+            background-color: black;
+            color: white;
+        }
+
+        .step-indicator.completed .step-number {
+            background-color: #e0e0e0;
+            border-color: #e0e0e0;
+            color: #fff;
+        }
+
+        .step-indicator .step-name {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .step-indicator .edit-link {
+            margin-left: auto;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* --- Form & Button Styles --- */
+        .form-label .required {
+            color: var(--required-red);
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 2px;
+        }
+
+        .form-text {
+            font-size: 0.8rem;
+        }
+
+        .btn-continue {
+            background-color: var(--continue-btn-bg);
+            color: white;
+            padding: 0.75rem;
+            font-weight: bold;
+        }
+
+        .btn-continue:hover {
+            background-color: #005a4a;
+            color: white;
+        }
+
+        .btn-place-order {
+            background-color: #3B82F6;
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem;
+        }
+
+        .btn-place-order:hover {
+            background-color: #2563EB;
+            color: white;
+        }
+
+        /* --- Payment Options --- */
+        .payment-options-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .payment-option {
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            flex-grow: 1;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .payment-option input[type="radio"] {
+            display: none;
+        }
+
+        .payment-option.selected {
+            border: 2px solid black;
+        }
+
+        .payment-option label {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            font-weight: 500;
+        }
+
+        .payment-option img {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+
+        #creditCardDetails {
+            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
+            padding-top: 2rem;
+        }
+
+        .card-logos img {
+            height: 25px;
+            margin-left: 5px;
+        }
+
+        /* --- Form Validation Styles --- */
+        .was-validated .form-control:invalid,
+        .form-control.is-invalid {
+            border-color: #dc3545;
+            background-color: var(--error-bg);
+        }
+
+        .was-validated .form-select:invalid,
+        .form-select.is-invalid {
+            border-color: #dc3545;
+            background-color: var(--error-bg);
+        }
+
+        .invalid-feedback {
+            font-weight: bold;
+        }
+
+        /* --- Order Summary Card --- */
+        .order-summary-card {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .order-summary-header {
+            background-color: var(--dark-header);
+            color: #fff;
+            padding: 1rem 1.5rem;
+        }
+
+        .order-summary-header h4 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .order-summary-body {
+            padding: 1.5rem;
+        }
+
+        .order-summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .order-summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .order-summary-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* --- Order Review Details --- */
+        .order-details-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .order-details-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 1rem;
+        }
+
+        .order-details-info {
+            flex-grow: 1;
+        }
+
+        .order-details-price {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        /* --- Utility & Component Styles --- */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1060;
+        }
+
+        .spinner-border {
+            width: 30rem;
+            height: 30rem;
+        }
+
+        #success-container {
+            display: none;
+            align-items: center;
+            padding: 2rem;
+            min-height: 80vh;
+            background-color: #f8f9fa;
+        }
+
+        .success-card {
+            background-color: #fff;
+            border-radius: 1rem;
+            padding: 3rem;
+            max-width: 600px;
+            margin: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .success-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            background-color: #198754;
+            color: #fff;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loading-overlay">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div id="fb-root"></div>
+
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0"
+        nonce="XYZ"></script>
+
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=Aff0wjsMuQng2Ktza425Cw3jxHw38TYO7g_sLFMMLmPPbUsZPcODO-qB-P-R3pxXTPQSaAywTnbfY3rw&disable-funding=card"></script>
+
+    <script>
+        paypal.Buttons({
+            // Validate shipping form before opening PayPal modal
+            onClick: function (data, actions) {
+                if (!document.getElementById('shippingForm').checkValidity()) {
+                    document.getElementById('shippingForm').classList.add('was-validated');
+                    alert('Please fill out your shipping details before proceeding.');
+                    // Force user back to the shipping step if invalid
+                    document.getElementById('paymentStep').style.display = 'none';
+                    document.getElementById('shippingStep').style.display = 'block';
+                    return actions.reject(); // Stop the PayPal flow
+                }
+                return actions.resolve(); // Continue to PayPal
+            },
+            // Set up the transaction details
+            createOrder: function (data, actions) {
+                const totalAmountText = document.getElementById('summary-total').textContent;
+                const totalAmount = parseFloat(totalAmountText.replace(/RM|\s/g, ''));
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: totalAmount.toFixed(2)
+                        }
+                    }]
+                });
+            },
+            // Finalize the transaction
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    const loadingOverlay = document.getElementById('loading-overlay');
+                    const successContainer = document.getElementById('success-container');
+                    loadingOverlay.style.display = 'flex';
+                    // Simulate final processing and show success page
+                    setTimeout(() => {
+                        localStorage.removeItem('oncesTechCart');
+                        sessionStorage.removeItem('shippingDetails');
+                        loadingOverlay.style.display = 'none';
+                        document.querySelector('.checkout-container').style.display = 'none';
+                        document.querySelector('footer').style.display = 'none';
+                        document.querySelector('.navbar').style.display = 'none';
+                        successContainer.style.display = 'flex';
+                    }, 1500);
+                });
+            }
+        }).render('#paypal-button-container');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="images/logo2.png" alt="Logo" width="40" height="32" class="me-2 rounded">
+                <span class="fw-bold">OncesTech</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">Cart</a>
+                    </li>
+                    <li class="nav-item">
+            <a class="nav-link" href="account.html"onclick="signInMessage()" data-toggle="tooltip" title="Account/Login" ><i class="fa-solid fa-user"></i></a>
+          </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="checkout-container">
+        <div class="row g-4">
+
+            <div class="col-lg-8">
+
+                <div id="shippingStep">
+                    <div class="step-indicator active">
+                        <div class="step-number">1</div>
+                        <div class="step-name">Shipping & Delivery</div>
+                    </div>
+                    <div class="content-card">
+                        <form id="shippingForm" novalidate>
+                            <h3>Shipping Address</h3>
+                            <p class="form-text mb-4">Fields marked with <span class="required">*</span> are required.
+                            </p>
+                            <div class="row g-3">
+                                <div class="col-md-6"><label for="s-firstName" class="form-label">First Name <span
+                                            class="required">*</span></label><input type="text" class="form-control"
+                                        id="s-firstName" placeholder="e.g., John" required></div>
+                                <div class="col-md-6"><label for="s-lastName" class="form-label">Last Name <span
+                                            class="required">*</span></label><input type="text" class="form-control"
+                                        id="s-lastName" placeholder="e.g., Doe" required></div>
+                                <div class="col-md-8"><label for="s-address" class="form-label">Address <span
+                                            class="required">*</span></label><input type="text" class="form-control"
+                                        id="s-address" placeholder="e.g., 123 Jalan Ampang" required></div>
+                                <div class="col-md-4"><label for="s-floorUnit" class="form-label">Floor, unit
+                                        #</label><input type="text" class="form-control" id="s-floorUnit"
+                                        placeholder="e.g., A-12-01"></div>
+                                <div class="col-md-4"><label for="s-postalCode" class="form-label">Postal code <span
+                                            class="required">*</span></label><input type="text" class="form-control"
+                                        id="s-postalCode" placeholder="e.g., 50450" required pattern="\d{5}"></div>
+                                <div class="col-md-4"><label for="s-city" class="form-label">City <span
+                                            class="required">*</span></label><input type="text" class="form-control"
+                                        id="s-city" placeholder="e.g., Bukit Mertajam" required></div>
+                                <div class="col-md-4">
+                                    <label for="s-state" class="form-label">State/Territory <span
+                                            class="required">*</span></label>
+                                    <select id="s-state" class="form-select" required>
+                                        <option selected disabled value="">Select an option</option>
+                                        <option>Johor</option>
+                                        <option>Kedah</option>
+                                        <option>Kelantan</option>
+                                        <option>Melaka</option>
+                                        <option>Negeri Sembilan</option>
+                                        <option>Pahang</option>
+                                        <option>Perak</option>
+                                        <option>Perlis</option>
+                                        <option>Pulau Pinang</option>
+                                        <option>Sabah</option>
+                                        <option>Sarawak</option>
+                                        <option>Selangor</option>
+                                        <option>Terengganu</option>
+                                        <option>Wp Kuala Lumpur</option>
+                                        <option>Wp Labuan</option>
+                                        <option>Wp Putrajaya</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <h3>Contact Information</h3>
+                            <div class="row g-3">
+                                <div class="col-md-6"><label for="s-email" class="form-label">Email Address <span
+                                            class="required">*</span></label><input type="email" class="form-control"
+                                        id="s-email" placeholder="e.g., johndoe@example.com" required></div>
+                                <div class="col-md-6"><label for="s-phone" class="form-label">Phone Number <span
+                                            class="required">*</span></label><input type="tel" class="form-control"
+                                        id="s-phone" placeholder="e.g., 0123456789" required pattern="[0-9]+"></div>
+                            </div>
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="checkbox" value="" id="rememberMeCheck">
+                                <label class="form-check-label" for="rememberMeCheck">Remember my shipping details for
+                                    next time</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="text-end mt-3">
+                        <button id="continueToPaymentBtn" class="btn btn-continue w-50">Continue to Payment</button>
+                    </div>
+                </div>
+
+                <div id="paymentStep" style="display: none;">
+                    <div class="step-indicator completed">
+                        <div class="step-number">✓</div>
+                        <div class="step-name">Shipping & Delivery</div><a id="editShippingBtn"
+                            class="edit-link">Edit</a>
+                    </div>
+                    <div class="step-indicator active">
+                        <div class="step-number">2</div>
+                        <div class="step-name">Payment</div>
+                    </div>
+                    <div class="content-card">
+                        <h5 class="mt-4">Select Payment Method</h5>
+                        <div class="payment-options-container">
+                            <div class="payment-option selected"><input type="radio" name="paymentMethod"
+                                    id="creditCard" checked value="Credit / Debit Card"><label for="creditCard"><i
+                                        class="fas fa-credit-card fa-fw me-2"></i> Credit / Debit Card</label></div>
+                            <div class="payment-option"><input type="radio" name="paymentMethod" id="paypal"
+                                    value="PayPal"><label for="paypal"><img src="images/paypal.png" alt="PayPal Logo"
+                                        class="me-2"> PayPal</label></div>
+                            <div class="payment-option"><input type="radio" name="paymentMethod" id="tng"
+                                    value="Touch 'n Go eWallet"><label for="tng"><img src="images/tng.png"
+                                        alt="TNG Logo" class="me-2"> Touch 'n Go eWallet</label></div>
+                        </div>
+                        <div id="creditCardDetails">
+                            <form id="paymentForm" novalidate>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5>Payment details</h5>
+                                    <div class="card-logos"><img src="images/visa.png" alt="Visa"><img
+                                            src="images/master.png" alt="Mastercard"></div>
+                                </div>
+                                <p class="form-text mb-4"><span class="required">*</span> Indicates a required field</p>
+                                <div class="row g-3">
+                                    <div class="col-md-6"><label for="cardNumber" class="form-label">Card number <span
+                                                class="required">*</span></label><input type="text" class="form-control"
+                                            id="cardNumber" required pattern="\d{16}" maxlength="16"></div>
+                                    <div class="col-md-6"><label for="cardName" class="form-label">Cardholder's name
+                                            <span class="required">*</span></label><input type="text"
+                                            class="form-control" id="cardName" required></div>
+                                    <div class="col-md-6">
+                                        <label for="expiryDate" class="form-label">Expiry date <span
+                                                class="required">*</span></label>
+                                        <div class="d-flex align-items-center">
+                                            <input type="text" class="form-control" id="expiryMonth" placeholder="MM"
+                                                required pattern="(0[1-9]|1[0-2])" maxlength="2">
+                                            <span class="mx-2">/</span>
+                                            <input type="text" class="form-control" id="expiryYear" placeholder="YY"
+                                                required pattern="\d{2}" maxlength="2">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="securityCode" class="form-label">Security code <span
+                                                class="required">*</span></label>
+                                        <div class="d-flex align-items-center"><input type="text" class="form-control"
+                                                id="securityCode" style="width: 100px;" required maxlength="3"
+                                                pattern="\d{3}"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="paypal-button-container" class="mt-4"></div>
+                    </div>
+                    <div class="text-end mt-3">
+                        <button id="continueToReviewBtn" class="btn btn-continue w-50">Continue to Review</button>
+                    </div>
+                </div>
+
+                <div id="reviewStep" style="display: none;">
+                    <div class="step-indicator completed">
+                        <div class="step-number">✓</div>
+                        <div class="step-name">Shipping & Delivery</div><a id="editShippingBtn2"
+                            class="edit-link">Edit</a>
+                    </div>
+                    <div class="step-indicator completed">
+                        <div class="step-number">✓</div>
+                        <div class="step-name">Payment</div><a id="editPaymentBtn" class="edit-link">Edit</a>
+                    </div>
+                    <div class="step-indicator active">
+                        <div class="step-number">3</div>
+                        <div class="step-name">Review</div>
+                    </div>
+                    <div class="content-card">
+                        <div class="summary-section">
+                            <h5 class="mb-3" id="orderDetailsTitle">Your Order Details (0 Items)</h5>
+                            <div id="review-order-details"></div>
+                        </div>
+                        <hr class="my-4">
+                        <div class="summary-section row">
+                            <h5 class="mb-3">Shipping Details <a class="float-end small fw-normal edit-link"
+                                    id="editShippingBtn3">Edit</a></h5>
+                            <div class="col-md-6 small">
+                                <div id="review-name"></div>
+                                <div id="review-address"></div>
+                                <div id="review-address-2"></div>
+                                <div id="review-email"></div>
+                                <div id="review-phone"></div>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <div class="summary-section">
+                            <h5 class="mb-3">Payment Method <a class="float-end small fw-normal edit-link"
+                                    id="editPaymentBtn2">Edit</a></h5>
+                            <div class="small">
+                                <div id="review-payment-method">Credit / Debit Card</div>
+                                <strong id="amount-charged">Amount To Be Charged: RM0.00</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+                <div class="order-summary-card">
+                    <div class="order-summary-header">
+                        <h4><i class="fas fa-shopping-bag me-2"></i>Order Summary</h4>
+                    </div>
+                    <div class="order-summary-body">
+                        <div class="order-summary-item"><span>Subtotal:</span><span id="summary-subtotal">RM 0.00</span>
+                        </div>
+                        <div class="order-summary-item"><span>Shipping:</span><span id="summary-shipping">RM 0.00</span>
+                        </div>
+                        <div class="order-summary-item"><span>Tax (6%):</span><span id="summary-tax">RM 0.00</span>
+                        </div>
+                        <div class="order-summary-item text-success"><span>Discounts:</span><span
+                                id="summary-discount">RM 0.00</span></div>
+                        <div class="order-summary-total"><span>Total:</span><span class="fw-bold" id="summary-total">RM
+                                0.00</span></div>
+                    </div>
+                    <div class="order-summary-footer">
+                        <button type="button" id="placeOrderBtn" class="btn btn-place-order w-100"><i
+                                class="fas fa-lock me-2"></i>Place Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="storage.js"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            //-----------------------------------------------------
+            // 1. DOM ELEMENT SELECTIONS
+            //-----------------------------------------------------
+            const shippingStep = document.getElementById('shippingStep');
+            const paymentStep = document.getElementById('paymentStep');
+            const reviewStep = document.getElementById('reviewStep');
+            const shippingForm = document.getElementById('shippingForm');
+            const paymentForm = document.getElementById('paymentForm');
+            const postalCodeInput = document.getElementById('s-postalCode');
+            const rememberMeCheck = document.getElementById('rememberMeCheck');
+            const toPaymentBtn = document.getElementById('continueToPaymentBtn');
+            const toReviewBtn = document.getElementById('continueToReviewBtn');
+            const placeOrderBtn = document.getElementById('placeOrderBtn');
+            const editShippingBtns = document.querySelectorAll('#editShippingBtn, #editShippingBtn2, #editShippingBtn3');
+            const editPaymentBtns = document.querySelectorAll('#editPaymentBtn, #editPaymentBtn2');
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            const creditCardRadio = document.getElementById('creditCard');
+            const creditCardDetails = document.getElementById('creditCardDetails');
+            const paypalBtnContainer = document.getElementById('paypal-button-container');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const successContainer = document.getElementById('success-container');
+
+            //-----------------------------------------------------
+            // 2. HELPER & CORE FUNCTIONS
+            //-----------------------------------------------------
+
+            function setCookie(name, value, days) {
+                let expires = "";
+                if (days) {
+                    const date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+            }
+
+            function getCookie(name) {
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+
+            function showStep(stepToShow) {
+                shippingStep.style.display = 'none';
+                paymentStep.style.display = 'none';
+                reviewStep.style.display = 'none';
+                stepToShow.style.display = 'block';
+            }
+
+            // OncesTech/checkout.html
+
+            function updateCheckoutSummary() {
+                const cart = CartManager.getCart();
+                const appliedPromo = CartManager.getAppliedPromo();
+
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+                // --- NEW SHIPPING LOGIC ---
+                // First, calculate the total number of individual items in the cart.
+                const totalItems = cart.reduce((count, item) => count + item.quantity, 0);
+                // Then, calculate the shipping fee at RM 3 per item.
+                const shipping = totalItems * 3.00;
+                // --- END OF NEW LOGIC ---
+
+                const tax = subtotal * 0.06;
+                let discount = 0;
+                if (appliedPromo) {
+                    discount = subtotal * appliedPromo.discount;
+                }
+                const total = subtotal + shipping + tax - discount;
+
+                document.getElementById('summary-subtotal').textContent = `RM ${subtotal.toFixed(2)}`;
+                document.getElementById('summary-shipping').textContent = `RM ${shipping.toFixed(2)}`;
+                document.getElementById('summary-tax').textContent = `RM ${tax.toFixed(2)}`;
+                document.getElementById('summary-discount').textContent = `- RM ${discount.toFixed(2)}`;
+                document.getElementById('summary-total').textContent = `RM ${total.toFixed(2)}`;
+                document.getElementById('amount-charged').textContent = `Amount To Be Charged: RM ${total.toFixed(2)}`;
+            }
+
+            function renderOrderDetails() {
+                const cart = CartManager.getCart();
+                const detailsContainer = document.getElementById('review-order-details');
+                const title = document.getElementById('orderDetailsTitle');
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+                title.textContent = `Your Order Details (${totalItems} Item${totalItems !== 1 ? 's' : ''})`;
+                detailsContainer.innerHTML = '';
+
+                if (cart.length > 0) {
+                    cart.forEach(item => {
+                        const itemHtml = `
+                        <div class="order-details-item">
+                            <img src="${item.image}" alt="${item.name}">
+                            <div class="order-details-info">
+                                <h6 class="mb-0">${item.name}</h6>
+                                <small class="text-muted">Qty: ${item.quantity}</small>
+                            </div>
+                            <div class="order-details-price">
+                                RM ${(item.price * item.quantity).toFixed(2)}
+                            </div>
+                        </div>`;
+                        detailsContainer.insertAdjacentHTML('beforeend', itemHtml);
+                    });
+                }
+            }
+
+            function getShippingDataFromForm() {
+                return {
+                    firstName: document.getElementById('s-firstName').value,
+                    lastName: document.getElementById('s-lastName').value,
+                    address: document.getElementById('s-address').value,
+                    floorUnit: document.getElementById('s-floorUnit').value,
+                    postalCode: document.getElementById('s-postalCode').value,
+                    city: document.getElementById('s-city').value,
+                    state: document.getElementById('s-state').value,
+                    email: document.getElementById('s-email').value,
+                    phone: document.getElementById('s-phone').value,
+                };
+            }
+
+            function populateShippingForm(data) {
+                if (!data) return;
+                document.getElementById('s-firstName').value = data.firstName || '';
+                document.getElementById('s-lastName').value = data.lastName || '';
+                document.getElementById('s-address').value = data.address || '';
+                document.getElementById('s-floorUnit').value = data.floorUnit || '';
+                document.getElementById('s-postalCode').value = data.postalCode || '';
+                document.getElementById('s-city').value = data.city || '';
+                document.getElementById('s-state').value = data.state || '';
+                document.getElementById('s-email').value = data.email || '';
+                document.getElementById('s-phone').value = data.phone || '';
+            }
+
+            function saveShippingDataToSession() {
+                const shippingData = getShippingDataFromForm();
+                sessionStorage.setItem('shippingDetails', JSON.stringify(shippingData));
+            }
+
+            function loadShippingDataFromSession() {
+                const savedData = sessionStorage.getItem('shippingDetails');
+                if (savedData) {
+                    populateShippingForm(JSON.parse(savedData));
+                }
+            }
+
+            function loadShippingDataFromCookie() {
+                const cookieData = getCookie('rememberedShipping');
+                if (cookieData) {
+                    populateShippingForm(JSON.parse(cookieData));
+                    rememberMeCheck.checked = true;
+                }
+            }
+
+            function togglePaymentButtons() {
+                const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked').value;
+                if (selectedPayment === 'PayPal') {
+                    toReviewBtn.style.display = 'block';
+                    paypalBtnContainer.style.display = 'block';
+                    creditCardDetails.style.display = 'none';
+                } else {
+                    toReviewBtn.style.display = 'block';
+                    paypalBtnContainer.style.display = 'none';
+                    creditCardDetails.style.display = (selectedPayment === 'Credit / Debit Card') ? 'block' : 'none';
+                }
+            }
+
+            function updateReviewDetails() {
+                const shippingData = JSON.parse(sessionStorage.getItem('shippingDetails'));
+                const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked').value;
+                const fullAddress = shippingData.floorUnit ? `${shippingData.address}, ${shippingData.floorUnit}` : shippingData.address;
+                const addressLine2 = `${shippingData.postalCode} ${shippingData.city}, ${shippingData.state}`;
+
+                document.getElementById('review-name').textContent = `${shippingData.firstName} ${shippingData.lastName}`;
+                document.getElementById('review-address').textContent = fullAddress;
+                document.getElementById('review-address-2').textContent = addressLine2;
+                document.getElementById('review-email').textContent = shippingData.email;
+                document.getElementById('review-phone').textContent = shippingData.phone;
+                document.getElementById('review-payment-method').textContent = selectedPayment;
+            }
+
+            //-----------------------------------------------------
+            // 3. EVENT LISTENERS
+            //-----------------------------------------------------
+
+            toPaymentBtn.addEventListener('click', (event) => {
+                if (!shippingForm.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    saveShippingDataToSession();
+                    if (rememberMeCheck.checked) {
+                        const shippingData = getShippingDataFromForm();
+                        setCookie('rememberedShipping', JSON.stringify(shippingData), 30);
+                    } else {
+                        setCookie('rememberedShipping', '', -1);
+                    }
+                    showStep(paymentStep);
+                }
+                shippingForm.classList.add('was-validated');
+            });
+
+            toReviewBtn.addEventListener('click', (event) => {
+                let isPaymentValid = true;
+                // Only validate the credit card form if it's the selected method
+                if (creditCardRadio.checked) {
+                    if (!paymentForm.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        isPaymentValid = false;
+                    }
+                    paymentForm.classList.add('was-validated');
+                }
+                if (isPaymentValid) {
+                    updateReviewDetails();
+                    renderOrderDetails();
+                    showStep(reviewStep);
+                }
+            });
+
+            placeOrderBtn.addEventListener('click', function () {
+                const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked').value;
+                if (reviewStep.style.display === 'block' && selectedPayment === 'PayPal') {
+                    alert('Please return to the payment step and use the PayPal button to complete your purchase.');
+                    showStep(paymentStep);
+                    return;
+                }
+                if (!shippingForm.checkValidity()) {
+                    alert('Please complete your shipping information correctly.');
+                    showStep(shippingStep);
+                    shippingForm.classList.add('was-validated');
+                    return;
+                }
+                if (creditCardRadio.checked && !paymentForm.checkValidity()) {
+                    alert('Please complete your payment information correctly.');
+                    showStep(paymentStep);
+                    paymentForm.classList.add('was-validated');
+                    return;
+                }
+                loadingOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    localStorage.removeItem('oncetechCart');
+                    sessionStorage.removeItem('shippingDetails');
+                    loadingOverlay.style.display = 'none';
+                    document.querySelector('.checkout-container').style.display = 'none';
+                    document.querySelector('footer').style.display = 'none';
+                    document.querySelector('.navbar').style.display = 'none';
+                    successContainer.style.display = 'flex';
+                }, 2000);
+            });
+
+            editShippingBtns.forEach(btn => btn.addEventListener('click', () => {
+                shippingForm.classList.remove('was-validated');
+                showStep(shippingStep);
+            }));
+
+            editPaymentBtns.forEach(btn => btn.addEventListener('click', () => {
+                paymentForm.classList.remove('was-validated');
+                showStep(paymentStep);
+            }));
+
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function () {
+                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    this.querySelector('input[type="radio"]').checked = true;
+                    togglePaymentButtons();
+                });
+            });
+
+            postalCodeInput.addEventListener('blur', function () {
+                const postalCode = this.value;
+                if (/^\d{5}$/.test(postalCode)) {
+                    $.ajax({
+                        url: `https://api.zippopotam.us/MY/${postalCode}`,
+                        type: 'GET',
+                        success: function (response) {
+                            const place = response.places[0];
+                            if (place) {
+                                $('#s-city').val(place['place name']);
+                                const stateMap = { "Kuala Lumpur": "Wp Kuala Lumpur", "Labuan": "Wp Labuan", "Putrajaya": "Wp Putrajaya" };
+                                let stateName = place['state'];
+                                let finalStateName = stateMap[stateName] || stateName;
+                                $(`#s-state option`).filter(function () { return $(this).text() === finalStateName; }).prop('selected', true);
+                            }
+                        },
+                        error: function (error) { console.error('API Error:', error); }
+                    });
+                }
+            });
+
+            //-----------------------------------------------------
+            // 4. INITIAL PAGE LOAD SETUP
+            //-----------------------------------------------------
+            loadShippingDataFromCookie();
+            loadShippingDataFromSession();
+            togglePaymentButtons();
+            updateCheckoutSummary();
+            renderOrderDetails();
+        });
+    </script>
+
+    <div id="success-container">
+        <div class="success-card text-center shadow">
+            <div class="success-icon-wrapper">
+                <i class="fas fa-check"></i>
+            </div>
+            <h1 class="display-5 fw-bold mt-4">Thank You!</h1>
+            <p class="lead text-muted">Your order has been successfully placed.</p>
+            <hr class="my-4">
+            <p>Your order is being processed and is scheduled for delivery within 3-5 business days.</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-4">
+                <a href="index.html" class="btn btn-primary btn-lg px-4 gap-3">Back to Homepage</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container-fluid bg-dark text-white py-4" id="contact">
+        <div class="container">
+            <div class="row align-items-center text-center text-md-start">
+
+                <div class="col-md-4 mb-3">
+                    <a href="#"
+                        class="d-flex align-items-center justify-content-center justify-content-md-start text-white text-decoration-none">
+                        <img src="images/logo2.png" width="80" height="60" alt="logo" class="me-2 rounded">
+                        <span class="h5 mb-0 fw-bold">OncesTech Store</span>
+                    </a>
+                    <p class="small mt-2">Your trusted store for affordable and reliable computer accessories.</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase text-warning">Contact Us</h6>
+                    <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> Kampar, 31350, Perak</p>
+                    <p class="mb-1"><i class="fas fa-envelope me-2"></i> support@oncestech.com</p>
+                    <p class="mb-1"><i class="fas fa-phone me-2"></i> +60 12-345 6789</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase text-warning">Follow Us</h6>
+                    <div>
+                        <a href="https://www.facebook.com/profile.php?id=61579724109309" class="text-white me-3"><i
+                                class="fab fa-facebook fa-lg"></i></a>
+                        <a href="oncestech@gmail.com" class="text-white me-3"><i class="fab fa-google fa-lg"></i></a>
+                        <a href="https://www.instagram.com/oncestech_official_store?igsh=azFvejZxbmRjcnZn"
+                            class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                    <div class="mt-3">
+                        <div class="fb-share-button" data-href="https://your-website-url.com" data-layout="button_count"
+                            data-size="small">
+                            <a target="_blank"
+                                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyour-website-url.com%2F&amp;src=sdkpreparse"
+                                class="fb-xfbml-parse-ignore">Share Us On facebook</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr class="bg-light">
+            <p class="text-center small mb-0">© 2025 OncesTech Store. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

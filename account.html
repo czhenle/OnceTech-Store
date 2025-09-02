@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
+  <title>My Account | OncesTech Store</title>
+  <link href="images/logo2.png" rel="shortcut icon">
+
+  <!-- jQuery & Bootstrap Framework Imports -->
+  <div>
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"></script>
+
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </div>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', Times, serif;
+    }
+    hr {
+      color: white;
+    }
+
+    /* Navigation */
+    .navigation-item {
+      color: lightgray;
+      padding: 0.5rem;
+
+      &:hover {
+        background-color: rgb(100, 98, 98);
+        color: rgb(18, 247, 197);
+        transition: background-color 0.15s;
+      }
+    }
+
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: rgba(116, 183, 234, 0.188);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: black;
+    }
+
+    .profile-sidebar {
+      background-color: #f9f9f9;
+      color: #333;
+      padding: 20px;
+      min-height: 100vh;
+      border-left: 2px solid #ccc;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .profile-sidebar h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #333;
+      text-align: left;
+      margin-left: 20px;
+    }
+
+    .image-container {
+      width: 170px;
+      height: 170px;
+      overflow: hidden;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      border: 2px solid #333;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      margin: 0 auto;
+    }
+
+    .image-container img {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+    }
+
+    .profile-info {
+      margin-top: 20px;
+      text-align: left;
+      margin-left: 20px;
+    }
+
+    .profile-info p {
+      margin: 0;
+      padding: 5px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .col-9 {
+      background-color: white;
+      color: black;
+      padding: 20px;
+    }
+
+    .welcome-container {
+      background-image: url('images/background.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .welcome-container .welcome-text h1 {
+      margin: 0;
+    }
+
+    .welcome-container .look-text p {
+      margin: 0;
+    }
+
+    .icon-and-text {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    table {
+      border: 2px solid white;
+    }
+
+    table th,
+    table tfoot {
+      background-color: black;
+      color: white;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 1000px;
+    }
+
+    .close {
+      color: green;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <header>
+
+    <!--
+      Navigation
+    -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <img src="images/logo2.png" alt="Logo" width="40" height="32" class="me-2 rounded">
+          <span class="fw-bold">OncesTech</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+          aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#products">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cart.html">Cart</a>
+            </li>
+            <li class="nav-item">
+              <li class="nav-item">
+            <a class="nav-link" href="#" id="accountLink" title="Account/Login">
+              <i class="fa-solid fa-user"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  </header>
+
+  <!-- Main Content -->
+  <main class="container py-5">
+    <div class="row g-4">
+      <!-- Sidebar/Profile Card -->
+      <aside class="col-lg-4">
+        <div class="card shadow-sm bg-gradient" style="background-color:#fff linear-gradient(135deg, #ffffff 0%, #ffffff 100%);">
+          <div class="card-body text-center">
+            <label for="profileImageInput" class="d-block mb-3">
+              <div class="mx-auto rounded-circle overflow-hidden border border-3 border-primary"
+                style="width:130px;height:130px;">
+                <img src="images/account.png" alt="Profile Picture" id="profileImage" class="w-100 h-100"
+                  style="object-fit:cover;cursor:pointer;">
+              </div>
+              <input type="file" id="profileImageInput" accept="image/*" style="display:none;">
+              <div class="text-primary small mt-2"><i class="fas fa-cloud-upload-alt"></i> Upload Profile Picture
+              </div>
+            </label>
+            <div id="profile-info" class="mt-3"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <section class="col-lg-8">
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <img src="images/logo.png" alt="Welcome" width="100" class="me-3 rounded-3 d-none d-md-block">
+              <div>
+                <h2 class="mb-1" id="welcome-user"></h2>
+                <p class="mb-0 text-muted">Welcome back! Here’s your recent activity and account info.</p>
+              </div>
+            </div>  
+            <hr>
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-shopping-cart fa-lg text-success me-2"></i>
+              <h4 class="mb-0" style="background-color: rgba(152, 199, 232, 0.439);">Recent Purchases</h4>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-middle">
+                <thead class="table-dark">
+                  <tr>
+                    <th>Purchase</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Delivery Status</th>
+                    <th>Feedback</th> <!-- New column -->
+                  </tr>
+                </thead>
+                <tbody id="recentRentalsTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Newsletter Card -->
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h3 class="fw-bold mb-2" style="font-family: cursive;">E-NEWSLETTER</h3>
+            <p class="mb-3">Sign up and be the first to know about new arrivals, promotions, and more.</p>
+            <button class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#newsletterModal">
+              Subscribe Now
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Newsletter Modal (Bootstrap 5) -->
+  <div class="modal fade" id="newsletterModal" tabindex="-1" aria-labelledby="newsletterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-4">
+        <div class="modal-header border-0">
+          <h5 class="modal-title" id="newsletterModalLabel">Subscribe</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Join our mailing list to receive updates and special offers. Subscribing is free.</p>
+          <input type="email" class="form-control mb-3" placeholder="Enter a valid email" id="emailInput" required>
+          <button class="btn btn-success w-100" onclick="submitEmail()">Confirm Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="container-fluid bg-dark text-white py-4" id="contact">
+    <div class="container">
+      <div class="row align-items-center text-center text-md-start">
+
+        <div class="col-md-4 mb-3">
+          <a href="#"
+            class="d-flex align-items-center justify-content-center justify-content-md-start text-white text-decoration-none">
+            <img src="images/logo2.png" width="80" height="60" alt="logo" class="me-2 rounded">
+            <span class="h5 mb-0 fw-bold">OncesTech Store</span>
+          </a>
+          <p class="small mt-2">Your trusted store for affordable and reliable computer accessories.</p>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <h6 class="text-uppercase text-warning">Contact Us</h6>
+          <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> Kampar, 31350, Perak</p>
+          <p class="mb-1"><i class="fas fa-envelope me-2"></i> support@oncestech.com</p>
+          <p class="mb-1"><i class="fas fa-phone me-2"></i> +60 12-345 6789</p>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <h6 class="text-uppercase text-warning">Follow Us</h6>
+          <div>
+            <a href="https://www.facebook.com/profile.php?id=61579724109309" class="text-white me-3"><i
+                class="fab fa-facebook fa-lg"></i></a>
+            <a href="oncestech@gmail.com" class="text-white me-3"><i class="fab fa-google fa-lg"></i></a>
+            <a href="https://www.instagram.com/oncestech_official_store?igsh=azFvejZxbmRjcnZn"
+              class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+          </div>
+          <div class="mt-3">
+            <div class="fb-share-button" data-href="https://your-website-url.com" data-layout="button_count"
+              data-size="small">
+              <a target="_blank"
+                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyour-website-url.com%2F&amp;src=sdkpreparse"
+                class="fb-xfbml-parse-ignore">Share Us On facebook</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <hr class="bg-light">
+      <p class="text-center small mb-0">© 2025 OncesTech Store. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzCzA2u7zR8p4s0hDJJ42ES65gDZp8jWM"></script>
+  <script src="js/account.js"></script>
+
+  <script>
+  function getCookie(name) {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+    }
+    return null;
+  }
+
+  function populateUserInfo() {
+    const accountKey = getCookie("account-key");
+    if (!accountKey) return;
+
+    const accounts = JSON.parse(localStorage.getItem("accounts") || "{}");
+    const user = accounts[accountKey];
+    if (!user) return;
+
+    // Show in profile card
+    const profileInfoDiv = document.getElementById("profile-info");
+    profileInfoDiv.innerHTML = `
+      <p><strong>Name:</strong> ${user.First_Name || ""} ${user.Last_Name || ""}</p> 
+      <p><strong>Email:</strong> ${user.Email || ""}</p>
+    `;
+
+    // Show welcome message
+    const welcomeUser = document.getElementById("welcome-user");
+    if (welcomeUser) {
+      welcomeUser.textContent = `Hello, ${user.First_Name || "User"}!`;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", populateUserInfo);
+
+  // Profile image upload and preview
+  document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("profileImageInput");
+    const img = document.getElementById("profileImage");
+
+    // Load saved image from localStorage (optional)
+    const savedImg = localStorage.getItem("profileImage");
+    if (savedImg) {
+      img.src = savedImg;
+    }
+
+    input.addEventListener("change", function () {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          img.src = e.target.result;
+          // Save to localStorage (optional, for persistence)
+          localStorage.setItem("profileImage", e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    });
+  });
+
+  function renderRecentPurchases(purchases) {
+    const tbody = document.getElementById("recentRentalsTableBody");
+    tbody.innerHTML = "";
+    purchases.forEach((purchase, idx) => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${purchase.item}</td>
+          <td>${purchase.date}</td>
+          <td>${purchase.amount}</td>
+          <td>${purchase.status}</td>
+          <td>
+            <select class="form-select feedback-select" data-idx="${idx}">
+              <option value="">Rate</option>
+              <option value="1">⭐</option>
+              <option value="2">⭐⭐</option>
+              <option value="3">⭐⭐⭐</option>
+              <option value="4">⭐⭐⭐⭐</option>
+              <option value="5">⭐⭐⭐⭐⭐</option>
+            </select>
+          </td>
+        </tr>
+      `;
+    });
+
+    // Optional: Save feedback to localStorage or handle as needed
+    document.querySelectorAll('.feedback-select').forEach(select => {
+      select.addEventListener('change', function() {
+        const idx = this.getAttribute('data-idx');
+        const rating = this.value;
+      });
+    });
+  }
+
+  const purchases = JSON.parse(localStorage.getItem("purchases") || "[]");
+
+  if (!localStorage.getItem("purchases")) {
+    const demoPurchases = [
+      {
+        item: "Gaming Mouse",
+        date: "2025-08-01",
+        amount: "RM89.00",
+        status: "Delivered"
+      },
+      {
+        item: "Mechanical Keyboard",
+        date: "2025-07-25",
+        amount: "RM199.00",
+        status: "Shipped"
+      },
+      {
+        item: "USB-C Hub",
+        date: "2025-07-10",
+        amount: "RM49.00",
+        status: "Delivered"
+      }
+    ];
+    localStorage.setItem("purchases", JSON.stringify(demoPurchases));
+  }
+
+  renderRecentPurchases(purchases);
+  </script>
+  <script src="account.js"></script>
+</body>
+
+</html>

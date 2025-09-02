@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link href="images/logo2.png" rel="shortcut icon">
+  <title>About Us | OncesTech Store</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', Times, serif;
+    }
+
+    body {
+      background: linear-gradient(120deg, #f8f9fa 0%, #e3f0ff 100%);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .navbar {
+      background-color: #000000;
+      height: 90px;
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: white !important;
+    }
+
+    .about-hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/about-us-banner.jpg') center/cover no-repeat;
+      height: 50vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+    }
+
+    .about-hero h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+    }
+
+    .about-section {
+      padding: 60px 0;
+    }
+
+    .about-section h2 {
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .about-section h3 {
+      font-weight: bold;
+    }
+
+    .about-section p {
+      line-height: 1.8;
+      color: #555;
+    }
+
+    .mission-vision-section {
+      background-color: #ffffff;
+    }
+
+    /* --- NEW: CSS for animations --- */
+    .animate-on-scroll {
+      opacity: 0;
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .fade-in {
+      transform: translateY(30px);
+    }
+
+    .slide-in-left {
+      transform: translateX(-50px);
+    }
+
+    .slide-in-right {
+      transform: translateX(50px);
+    }
+
+    .is-visible {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+
+    /* --- NEW: CSS for Team Cards --- */
+    .team-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+    }
+
+    .team-card .card-img-top {
+      transition: transform 0.4s ease;
+    }
+
+    .team-card:hover .card-img-top {
+      transform: scale(1.05);
+    }
+
+    .team-card .card-img-wrapper {
+      overflow: hidden;
+      border-top-left-radius: 0.375rem;
+      border-top-right-radius: 0.375rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="images/logo2.png" alt="Logo" width="40" height="32" class="me-2 rounded">
+        <span class="fw-bold">OncesTech</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#products">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cart.html">Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="account.html"onclick="signInMessage()" data-toggle="tooltip" title="Account/Login" ><i class="fa-solid fa-user"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>  
+  </nav>
+
+  <section class="about-hero">
+    <div class="animate-on-scroll fade-in">
+      <h1>About OncesTech</h1>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center animate-on-scroll fade-in">
+          <h2>Our Story</h2>
+          <p>
+            Welcome to OncesTech, your number one source for all things tech. We're dedicated to giving you the very
+            best of computer accessories, with a focus on dependability, customer service, and uniqueness.
+          </p>
+          <p>
+            Founded in 2024 by a team of tech enthusiasts, OncesTech has come a long way from its beginnings. When we
+            first started out, our passion for helping others find reliable and affordable tech drove us to do intense
+            research, and gave us the impetus to turn hard work and inspiration into a booming online store. We now
+            serve customers all over the world and are thrilled to be a part of the tech community.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section mission-vision-section">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-6 mb-4 animate-on-scroll slide-in-left">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body p-5">
+              <h3><i class="fas fa-bullseye me-2 text-primary"></i>Our Mission</h3>
+              <p class="mt-3">To provide high-quality, affordable, and reliable computer accessories that empower our
+                customers to achieve more, whether at work, in gaming, or in their creative pursuits.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4 animate-on-scroll slide-in-right">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body p-5">
+              <h3><i class="far fa-eye me-2 text-primary"></i>Our Vision</h3>
+              <p class="mt-3">To be the most trusted and go-to online store for computer accessories, known for our
+                exceptional customer service, innovative products, and commitment to the tech community.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="container">
+      <div class="row text-center mb-5 animate-on-scroll fade-in">
+        <div class="col-lg-8 mx-auto">
+          <h2 class="fw-bold">Our Store</h2>
+          <p class="text-muted">Come visit us at our location in Kampar, Perak.</p>
+        </div>
+      </div>
+      <div class="row animate-on-scroll fade-in">
+        <div class="col-12">
+          <div class="map-container shadow-lg rounded">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15913.619570357996!2d101.1176222!3d4.3348363!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cb1d573f9aabf3%3A0x28cc06c069e40dce!2sUniversiti%20Tunku%20Abdul%20Rahman%20Kampar%20Campus!5e0!3m2!1sen!2smy!4v1681116688392!5m2!1sen!2smy"
+              width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section team-section bg-light">
+    <div class="container">
+      <div class="row text-center mb-5 animate-on-scroll fade-in">
+        <div class="col-lg-8 mx-auto">
+          <h2 class="fw-bold">Meet Our Team</h2>
+          <p class="text-muted">The passionate individuals dedicated to bringing you the best in tech.</p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3 animate-on-scroll fade-in">
+          <div class="card team-card h-100 shadow-sm text-center">
+            <div class="card-img-wrapper">
+              <img src="images/wilson.jpg" class="card-img-top" alt="Photo of Owi Wilson">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Owi Wilson</h5>
+              <h6 class="text-primary mb-3">Founder & CEO</h6>
+              <p class="card-text small text-muted">Leads the team with a vision to make top-tier computer accessories
+                accessible to everyone.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 animate-on-scroll fade-in" style="transition-delay: 0.1s;">
+          <div class="card team-card h-100 shadow-sm text-center">
+            <div class="card-img-wrapper">
+              <img src="images/chenglock.jpg" class="card-img-top" alt="Photo of Tan Cheng Lock">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Tan Cheng Lock</h5>
+              <h6 class="text-primary mb-3">Product Manager</h6>
+              <p class="card-text small text-muted">The expert eye behind our product catalog, ensuring every item meets
+                our strict quality standards.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 animate-on-scroll fade-in" style="transition-delay: 0.2s;">
+          <div class="card team-card h-100 shadow-sm text-center">
+            <div class="card-img-wrapper">
+              <img src="images/weijie.jpg" class="card-img-top" alt="Photo of Ng Wei Jie">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Ng Wei Jie</h5>
+              <h6 class="text-primary mb-3">Marketing Head</h6>
+              <p class="card-text small text-muted">Our storyteller, connecting the community with our brand and the
+                latest tech innovations.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 animate-on-scroll fade-in" style="transition-delay: 0.3s;">
+          <div class="card team-card h-100 shadow-sm text-center">
+            <div class="card-img-wrapper">
+              <img src="images/haozhe.jpg" class="card-img-top" alt="Photo of Yee Hao Zhe">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Yee Hao Zhe</h5>
+              <h6 class="text-primary mb-3">Customer Support Lead</h6>
+              <p class="card-text small text-muted">Ensures every customer has a smooth and positive experience with our
+                products and service.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<footer class="container-fluid bg-dark text-white py-4" id="contact">
+        <div class="container">
+            <div class="row align-items-center text-center text-md-start">
+
+                <div class="col-md-4 mb-3">
+                    <a href="#"
+                        class="d-flex align-items-center justify-content-center justify-content-md-start text-white text-decoration-none">
+                        <img src="images/logo2.png" width="80" height="60" alt="logo" class="me-2 rounded">
+                        <span class="h5 mb-0 fw-bold">OncesTech Store</span>
+                    </a>
+                    <p class="small mt-2">Your trusted store for affordable and reliable computer accessories.</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase text-warning">Contact Us</h6>
+                    <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> Kampar, 31350, Perak</p>
+                    <p class="mb-1"><i class="fas fa-envelope me-2"></i> support@oncestech.com</p>
+                    <p class="mb-1"><i class="fas fa-phone me-2"></i> +60 12-345 6789</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase text-warning">Follow Us</h6>
+                    <div>
+                        <a href="https://www.facebook.com/profile.php?id=61579724109309" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="oncestech@gmail.com" class="text-white me-3"><i class="fab fa-google fa-lg"></i></a>
+                        <a href="https://www.instagram.com/oncestech_official_store?igsh=azFvejZxbmRjcnZn" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                    <div class="mt-3">  
+                        <div class="fb-share-button" data-href="https://your-website-url.com" data-layout="button_count"
+                            data-size="small">
+                            <a target="_blank"
+                                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyour-website-url.com%2F&amp;src=sdkpreparse"
+                                class="fb-xfbml-parse-ignore">Share Us On facebook</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr class="bg-light">
+            <p class="text-center small mb-0">© 2025 OncesTech Store. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+      if (!animatedElements) {
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1 // Trigger when 10% of the element is visible
+      });
+
+      animatedElements.forEach(element => {
+        observer.observe(element);
+      });
+    });
+  </script>
+</body>
+
+</html>

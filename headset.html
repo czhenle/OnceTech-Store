@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Headset | Onces Tech Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="images/logo2.png" rel="shortcut icon">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Times, serif;
+        }
+
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        /* Make filters & cart button same size */
+        .filter-select,
+        .btn-cart {
+            min-width: 150px;
+            height: 42px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* Special styling for cart button */
+        .btn-cart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-weight: 500;
+            background: #fff;
+            border: 1px solid #ddd;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cart:hover {
+            background: #f8f9fa;
+            border-color: #bbb;
+            color: #000;
+        }
+
+
+        /* Filter & Search Inputs */
+        .filter-select,
+        .search {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+        }
+
+        .filter-select:focus,
+        .search input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .search input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 1rem;
+        }
+
+
+        /* Card */
+        .card {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        /* Card Buttons */
+        .card .btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        /* Specific Buttons */
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-outline-secondary {
+            background: #fff;
+            border: 1px solid #ccc;
+            color: #333;
+        }
+
+        .btn-outline-secondary:hover {
+            background: #f2f2f7;
+        }
+
+        .btn-outline-third {
+            background: #28a745;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-outline-third:hover {
+            background: #218838;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #333;
+            border: none;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+
+        /* Compare button (fixed) */
+        .compareBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+
+        /* Modal container (rounded + subtle shadow) */
+        .modal-content {
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            background: #fff;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* When modal shows, add a little "pop" */
+        .modal.show .modal-content {
+            transform: scale(1.02);
+        }
+
+        /* Title styling */
+        .modal-title {
+            font-weight: 700;
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+        /* Body text */
+        .modal-body p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        /* Primary button (Go to Cart) */
+        .modal-footer .btn-primary {
+            background: #4CAF50;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .modal-footer .btn-primary:hover {
+            background: #45a049;
+        }
+
+        /* Secondary button (Continue Shopping) */
+        .modal-footer .btn-secondary {
+            background: #f1f1f1;
+            color: #333;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .modal-footer .btn-secondary:hover {
+            background: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="images/logo2.png" alt="Logo" width="40" height="32" class="me-2 rounded">
+                <span class="fw-bold">OncesTech</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="account.html" onclick="signInMessage()" data-toggle="tooltip"
+                            title="Account/Login"><i class="fa-solid fa-user"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Promotional Banner -->
+    <section class="mb-4">
+        <img src="images/banner-headset.jpg" class="img-fluid w-100 rounded-3 shadow-sm" alt="Promotion Banner"
+            style="max-height: 230px; object-fit:cover;">
+
+        <div class="text-center py-4">
+            <h1 class="fw-bold mb-2">Headset</h1>
+            <h3 class="lead text-muted fst-italic">
+                Hear every detail. Feel every moment.
+            </h3>
+        </div>
+    </section>
+
+    <section class="container my-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <!-- Filter Bar -->
+            <div class="d-flex gap-2 flex-wrap">
+                <!-- Battery -->
+                <select id="filter-battery" class="filter-select">
+                    <option value="">Battery</option>
+                    <option value="20h">Up to 20h</option>
+                    <option value="40h">Up to 40h</option>
+                    <option value="long">Up to 40h+</option>
+                </select>
+
+                <!-- Connection -->
+                <select id="filter-connection" class="filter-select">
+                    <option value="">Connection</option>
+                    <option value="Wired">Wired</option>
+                    <option value="Wireless">Wireless</option>
+                </select>
+            </div>
+
+            <!-- Simple Add to Cart Button -->
+            <button id="yourCartBtn" class="btn btn-light d-flex align-items-center gap-2 px-4 py-2 shadow-sm border">
+                <i class="bi bi-cart-plus"></i>
+                Your Cart
+            </button>
+        </div>
+    </section>
+
+    <!-- Search Bar Section -->
+    <div class="container my-3">
+        <div class="search" role="search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <path d="M20 20l-3.5-3.5" />
+            </svg>
+            <input id="q" type="search" placeholder="Search Headset (G733 Headset)" aria-label="Search headsets" />
+        </div>
+    </div>
+
+
+    <!-- Product Section -->
+    <div class="container my-5">
+        <div class="row" id="productGrid">
+            <!-- Products will render here -->
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg"> <!-- modal-lg = wider, can change to modal-md -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="modalTitle" class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <!-- Image -->
+                    <img id="modalImage" src="" alt="Headset" class="img-fluid mb-3"
+                        style="max-width: 200px; height: auto;" />
+                    <!-- Details Table -->
+                    <table class="table table-bordered text-start">
+                        <tbody>
+                            <tr>
+                                <th>Price (RM)</th>
+                                <td id="modalPrice"></td>
+                            </tr>
+                            <tr>
+                                <th>Frequency Response</th>
+                                <td id="modalFrequency"></td>
+                            </tr>
+                            <tr>
+                                <th>Battery</th>
+                                <td id="modalBattery"></td>
+                            </tr>
+                            <tr>
+                                <th>Connection</th>
+                                <td id="modalConnection"></td>
+                            </tr>
+                            <tr>
+                                <th>Features</th>
+                                <td>
+                                    <ul id="modalFeatures" class="mb-0"></ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Modal -->
+    <div class="modal fade" id="compareModal" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Compare Headsets</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center align-middle">
+                            <thead class="table-light">
+                                <tr id="compareHeader"></tr>
+                            </thead>
+                            <tbody id="compareBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Popup Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center">
+                <div class="modal-header border-0">
+                    <h1 class="modal-title w-100" id="cartModalLabel">Item Added to Cart!</h1>
+                </div>
+                <div class="modal-body">
+                    <p id="cartModalMsg">Please check it out at your cart.</p>
+                </div>
+                <div class="modal-footer border-0 d-flex justify-content-center">
+                    <a href="cart.html" class="btn btn-primary">Go to Cart</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buy Now Modal -->
+    <div class="modal fade" id="buyNowModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title w-100 text-center fw-bold">Confirm Purchase</h5>
+                </div>
+                <div class="modal-body text-center">
+                    <p id="buyNowItem" class="mb-1"></p>
+                    <p id="buyNowPrice" class="fw-semibold text-primary"></p>
+                </div>
+                <div class="modal-footer border-0 d-flex justify-content-center gap-3">
+                    <button type="button" class="btn btn-success px-4" id="proceedBtn">Proceed</button>
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Not this time</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quantity Modal -->
+    <div class="modal fade" id="quantityModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title w-100 text-center fw-bold" id="quantityModalTitle">Select Quantity</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p id="quantityModalItem" class="mb-3"></p>
+                    <div class="d-flex justify-content-center">
+                        <div class="input-group mb-3" style="max-width: 150px;">
+                            <button class="btn btn-outline-secondary" type="button" id="qtyMinus">-</button>
+                            <input type="number" class="form-control text-center" id="qtyInput" value="1" min="1">
+                            <button class="btn btn-outline-secondary" type="button" id="qtyPlus">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 d-flex justify-content-center gap-3">
+                    <button type="button" class="btn btn-success px-4" id="qtyConfirmBtn">Confirm</button>
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container-fluid bg-dark text-white py-4" id="contact">
+        <div class="container">
+            <div class="row align-items-center text-center text-md-start">
+
+                <div class="col-md-4 mb-3">
+                    <a href="#"
+                        class="d-flex align-items-center justify-content-center justify-content-md-start text-white text-decoration-none">
+                        <img src="images/logo2.png" width="80" height="60" alt="logo" class="me-2 rounded">
+                        <span class="h5 mb-0 fw-bold">OncesTech Store</span>
+                    </a>
+                    <p class="small mt-2">Your trusted store for affordable and reliable computer accessories.</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase text-warning">Contact Us</h6>
+                    <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> Kampar, 31350, Perak</p>
+                    <p class="mb-1"><i class="fas fa-envelope me-2"></i> support@oncestech.com</p>
+                    <p class="mb-1"><i class="fas fa-phone me-2"></i> +60 12-345 6789</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase text-warning">Follow Us</h6>
+                    <div>
+                        <a href="https://www.facebook.com/profile.php?id=61579724109309" class="text-white me-3"><i
+                                class="fab fa-facebook fa-lg"></i></a>
+                        <a href="oncestech@gmail.com" class="text-white me-3"><i class="fab fa-google fa-lg"></i></a>
+                        <a href="https://www.instagram.com/oncestech_official_store?igsh=azFvejZxbmRjcnZn"
+                            class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                    <div class="mt-3">
+                        <div class="fb-share-button" data-href="https://your-website-url.com" data-layout="button_count"
+                            data-size="small">
+                            <a target="_blank"
+                                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyour-website-url.com%2F&amp;src=sdkpreparse"
+                                class="fb-xfbml-parse-ignore">Share Us On facebook</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr class="bg-light">
+            <p class="text-center small mb-0">© 2025 OncesTech Store. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let products = [];
+            let selectedProduct = null;
+            let buyNowMode = false;
+            let selectedIds = [];
+
+            // Load JSON via AJAX
+            $.ajax({
+                url: "https://gist.githubusercontent.com/czhenle/182796db868a026313dc3ed819733243/raw/a47ab92d787f63c81a884c7aeaf03848647338df/headset.json",
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    products = data;
+                    renderProducts(products); // render after loading
+                },
+                error: function (err) {
+                    console.error("Failed to load headset.json", err);
+                }
+            });
+
+            // Render function
+            function renderProducts(list) {
+                const $grid = $("#productGrid").empty();
+                list.forEach(p => {
+                    $grid.append(`
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow h-100">
+                        <img src="${p.image}" class="card-img-top" alt="${p.name}">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">${p.name}</h5>
+                            <p class="card-text text-muted">Price: RM${p.price}</p>
+                            <div class="d-flex flex-wrap gap-2 mt-auto">
+                                <button class="btn btn-primary flex-fill view-details" data-id="${p.id}" data-bs-toggle="modal" data-bs-target="#detailsModal">View Details</button>
+                                <button class="btn btn-outline-secondary flex-fill add-cart" data-id="${p.id}"><i class="bi bi-cart-plus"></i> Add to Cart</button>
+                                <button class="btn btn-outline-third flex-fill buy-now" data-id="${p.id}"><i class="bi bi-bag-check"></i> Buy Now</button>
+                                <input type="checkbox" class="btn-check compare-check" id="compare-${p.id}" value="${p.id}" autocomplete="off">
+                                <label class="btn btn-warning flex-fill" for="compare-${p.id}">Compare</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `);
+                });
+            }
+
+            // ---------------- Filters ----------------
+            function applyFilters() {
+                const batteryFilter = $("#filter-battery").val();
+                const connectionFilter = $("#filter-connection").val();
+                const search = $("#q").val().toLowerCase();
+
+                const filtered = products.filter(p => {
+                    let ok = true;
+
+                    if (batteryFilter && p.battery !== '-') {
+                        const batteryVal = parseInt(p.battery);
+                        if (batteryFilter === "20h") ok = ok && batteryVal <= 20;
+                        else if (batteryFilter === "40h") ok = ok && batteryVal <= 40;
+                        else if (batteryFilter === "long") ok = ok && batteryVal > 40;
+                    }
+
+                    if (connectionFilter && p.connection !== connectionFilter) ok = false;
+                    if (search && !p.name.toLowerCase().includes(search)) ok = false;
+
+                    return ok;
+                });
+
+                renderProducts(filtered);
+            }
+
+            $("#q").on("input", applyFilters);
+            $("#filter-battery, #filter-connection").on("change", applyFilters);
+
+            // ---------------- Detail Modal ----------------
+            $(document).on("click", ".view-details", function () {
+                const id = $(this).data("id");
+                const p = products.find(x => x.id === id);
+
+                $("#modalTitle").text(p.name);
+                $("#modalImage").attr("src", p.image);
+                $("#modalPrice").text(p.price);
+                $("#modalFrequency").text(p.frequencyResponse);
+                $("#modalBattery").text(p.battery);
+                $("#modalConnection").text(p.connection);
+
+                const $features = $("#modalFeatures").empty();
+                p.features.forEach(f => $features.append(`<li>${f}</li>`));
+            });
+
+            // ---------------- Compare ----------------
+            $(document).on("change", ".compare-check", function () {
+                const id = $(this).val();
+                if ($(this).is(":checked")) {
+                    if (selectedIds.length >= 2) {
+                        alert("Only 2 at a time");
+                        $(this).prop("checked", false);
+                        return;
+                    }
+                    selectedIds.push(id);
+                } else {
+                    selectedIds = selectedIds.filter(x => x !== id);
+                }
+
+                if (selectedIds.length === 2) {
+                    const items = products.filter(p => selectedIds.includes(p.id));
+                    renderCompare(items);
+                    new bootstrap.Modal($("#compareModal")).show();
+                }
+            });
+
+            $("#compareModal").on("hidden.bs.modal", function () {
+                selectedIds = [];
+                $(".compare-check").prop("checked", false);
+            });
+
+            function renderCompare(items) {
+                const $header = $("#compareHeader").empty().append("<th>Specs</th>");
+                const $body = $("#compareBody").empty();
+
+                items.forEach(p => $header.append(`<th>${p.name}</th>`));
+
+                const fields = [
+                    { key: "price", label: "Price (RM)" },
+                    { key: "frequencyResponse", label: "Frequency Response" },
+                    { key: "battery", label: "Battery" },
+                    { key: "connection", label: "Connection" },
+                    { key: "features", label: "Features", format: v => "<ul class='text-start mb-0'>" + v.map(f => `<li>${f}</li>`).join("") + "</ul>" }
+                ];
+
+                fields.forEach(f => {
+                    const $tr = $("<tr></tr>").append(`<td><strong>${f.label}</strong></td>`);
+                    items.forEach(p => {
+                        let val = p[f.key];
+                        if (f.format) val = f.format(val);
+                        $tr.append(`<td>${val}</td>`);
+                    });
+                    $body.append($tr);
+                });
+            }
+
+            // ---------------- Quantity Modal ----------------
+            function openQuantityModal(productId, isBuyNow = false) {
+                selectedProduct = products.find(p => p.id === productId);
+                buyNowMode = isBuyNow;
+
+                $("#quantityModalTitle").text(isBuyNow ? "Buy Now" : "Add to Cart");
+                $("#quantityModalItem").text(selectedProduct.name);
+                $("#qtyInput").val(1);
+
+                new bootstrap.Modal($("#quantityModal")).show();
+            }
+
+            $("#qtyPlus").click(() => $("#qtyInput")[0].stepUp());
+            $("#qtyMinus").click(() => { const input = $("#qtyInput")[0]; if (input.value > 1) input.stepDown(); });
+
+            $("#qtyConfirmBtn").click(function () {
+                const qty = parseInt($("#qtyInput").val());
+                if (!qty || qty < 1) return;
+
+                if (buyNowMode) {
+                    $("#buyNowItem").text(`${selectedProduct.name} (x${qty})`);
+                    $("#buyNowPrice").text(`RM ${(selectedProduct.price * qty).toFixed(2)}`);
+                    const buyNowModal = new bootstrap.Modal($("#buyNowModal"));
+                    buyNowModal.show();
+
+                    $("#proceedBtn").off("click").on("click", function () {
+                        addToCart(selectedProduct, qty);
+                        window.location.href = "cart.html";
+                    });
+                } else {
+                    addToCart(selectedProduct, qty);
+                    $("#cartModalMsg").text(`${selectedProduct.name} (x${qty}) added to cart!`);
+                    new bootstrap.Modal($("#cartModal")).show();
+                }
+
+                bootstrap.Modal.getInstance($("#quantityModal")[0]).hide();
+            });
+
+            // ---------------- Cart ----------------
+            function addToCart(product, quantity) {
+                let cart = JSON.parse(localStorage.getItem("oncetechCart")) || [];
+                const existing = cart.find(item => item.id === product.id);
+                if (existing) existing.quantity += quantity;
+                else cart.push({ ...product, quantity });
+                localStorage.setItem("oncetechCart", JSON.stringify(cart));
+            }
+
+            $("#yourCartBtn").click(function () {
+                const cart = JSON.parse(localStorage.getItem("oncetechCart")) || [];
+                if (cart.length === 0) alert("Your cart is empty!");
+                else window.location.href = "cart.html";
+            });
+
+            // ---------------- Buttons ----------------
+            $(document).on("click", ".add-cart", function () { openQuantityModal($(this).data("id"), false); });
+            $(document).on("click", ".buy-now", function () { openQuantityModal($(this).data("id"), true); });
+
+            // ---------------- Initial Render ----------------
+            renderProducts(products);
+        });
+    </script>
+
+</body>
+
+</html>

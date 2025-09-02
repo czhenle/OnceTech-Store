@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="images/logo2.png" rel="shortcut icon">
+    <title>Login | Onces Tech Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Times, serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            /* Light background */
+            font-family: Arial, sans-serif;
+
+            background-image: url('images/background.jpg');
+            background-repeat: inherit;
+            background-position: center;
+            background-attachment: fixed;
+
+        }
+
+        .navbar {
+            background-color: #000000;
+            height: 90px;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: white !important;
+        }
+
+        .wrapper1 {
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+            background: url('images/scenery.jpg') no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .wrapper {
+            width: 420px;
+            background-color: rgba(255, 255, 255, .1);
+            border: 2px solid rgba(255, 255, 255, .2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+            color: rgb(0, 0, 0);
+            border-radius: 10px;
+            padding: 30px 40px;
+        }
+
+        .wrapper h1 {
+            margin-bottom: 30px;
+            font-size: 36px;
+            text-align: center;
+        }
+
+        .wrapper .input-box {
+            width: 100%;
+            height: 50px;
+            background: transparent;
+            margin: 30px 0;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            border: 2px solid rgba(1, 1, 1, 0.67);
+            border-radius: 40px;
+            font-size: 16px;
+            color: rgb(0, 0, 0);
+            padding: 20px 45px 20px 20px;
+        }
+
+        .input-box input::placeholder {
+            color: rgb(0, 0, 0);
+        }
+
+        .input-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+        }
+
+        .wrapper .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14.5px;
+            margin: -15px 0 15px;
+        }
+
+        .remember-forgot label input {
+            accent-color: rgb(0, 0, 0);
+            margin-right: 3px;
+        }
+
+        .remember-forgot a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+        }
+
+        .remember-forgot a:hover {
+            text-decoration: underline;
+        }
+
+        .wrapper .btn {
+            width: 100%;
+            height: 45px;
+            background: rgba(1, 4, 105, 0.649);
+            border: none;
+            outline: none;
+            border-radius: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.429);
+            cursor: pointer;
+            font-size: 16px;
+            color: rgb(255, 255, 255);
+            font-weight: 600;
+        }
+
+        .wrapper .register-link {
+            font-size: 14.5px;
+            text-align: center;
+            margin: 20px 0 15px;
+        }
+
+        .register-link p a {
+            color: rgb(193, 68, 68);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-link p a:hover {
+            text-decoration: underline;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100px;
+        }
+
+        .btn {
+            display: inline-block;
+            cursor: pointer;
+            transition: background-color 0.5s ease;
+        }
+
+        .btn:hover {
+            background-color: #0f77bd;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="index.html">
+                    <img src="images/logo2.png" alt="Logo" width="40" height="32" class="me-2 rounded">
+                    <span class="fw-bold">OncesTech</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#products">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="cart.html">Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.html " onclick="signInMessage()" data-toggle="tooltip"
+                                title="Account/Login"><i class="fa-solid fa-user"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="wrapper1">
+        <div class="wrapper">
+            <form onsubmit="checkUser(event)">
+                <div class="image-container">
+                    <img src="images/logo2.png" width="150" alt="Logo">
+                </div>
+                <h1>Sign In</h1>
+                <div class="input-box">Email :
+                    <input type="text" id="email" required>
+                </div>
+                <div class="input-box">Password :
+                    <input type="password" id="passWord" required>
+                </div>
+                <span> <br> </span>
+                <div class="remember-forgot">
+                    <label><input type="checkbox">I have accepted the Terms and Conditions</label>
+                </div>
+                <button class="btn" id="backtoMain">Login (Double Click)</button>
+
+                <div class="register-link">
+                    <p>Don't have an account?<a href="register.html"> Register Here!</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer class="container-fluid bg-dark text-white py-4" id="contact">
+        <div class="container">
+            <div class="row align-items-center text-center text-md-start">
+
+                <div class="col-md-4 mb-3">
+                    <a href="#"
+                        class="d-flex align-items-center justify-content-center justify-content-md-start text-white text-decoration-none">
+                        <img src="images/logo2.png" width="80" height="60" alt="logo" class="me-2 rounded">
+                        <span class="h5 mb-0 fw-bold">OncesTech Store</span>
+                    </a>
+                    <p class="small mt-2">Your trusted store for affordable and reliable computer accessories.</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase text-warning">Contact Us</h6>
+                    <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> Kampar, 31350, Perak</p>
+                    <p class="mb-1"><i class="fas fa-envelope me-2"></i> support@oncestech.com</p>
+                    <p class="mb-1"><i class="fas fa-phone me-2"></i> +60 12-345 6789</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-uppercase text-warning">Follow Us</h6>
+                    <div>
+                        <a href="https://www.facebook.com/profile.php?id=61579724109309" class="text-white me-3"><i
+                                class="fab fa-facebook fa-lg"></i></a>
+                        <a href="oncestech@gmail.com" class="text-white me-3"><i class="fab fa-google fa-lg"></i></a>
+                        <a href="https://www.instagram.com/oncestech_official_store?igsh=azFvejZxbmRjcnZn"
+                            class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                    <div class="mt-3">
+                        <div class="fb-share-button" data-href="https://your-website-url.com" data-layout="button_count"
+                            data-size="small">
+                            <a target="_blank"
+                                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyour-website-url.com%2F&amp;src=sdkpreparse"
+                                class="fb-xfbml-parse-ignore">Share Us On facebook</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr class="bg-light">
+            <p class="text-center small mb-0">© 2025 OncesTech Store. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script>
+        function checkUser(event) {
+            event.preventDefault();
+
+            var getEmail = document.getElementById("email").value;
+            var getPass = document.getElementById("passWord").value;
+
+            var button = document.getElementById("backtoMain");
+
+            var email1 = localStorage.getItem("Email");
+            var PassWord = localStorage.getItem("Password");
+            var retrievedAccountsJSON = localStorage.getItem("accounts");
+            var retrievedAccounts = retrievedAccountsJSON ? JSON.parse(retrievedAccountsJSON) : {};
+
+            button.addEventListener("click", function () {
+                var isMatchFound = false;
+                for (var key in retrievedAccounts) {
+                    if (retrievedAccounts.hasOwnProperty(key)) {
+                        var account = retrievedAccounts[key];
+                        if (account.Email === getEmail && account.Password === getPass) {
+                            isMatchFound = true;
+                            document.cookie = "account-key=" + key;
+                            break; // Found a matching account, exit the loop
+                        }
+                    }
+                }
+
+                if (isMatchFound) {
+                    alert("Login Successful!");
+                    setLoginCookie("true");
+                    window.location.href = "index.html";
+                    // Redirect to the next page or perform other actions
+                } else {
+                    alert("Invalid Email or Password.");
+                    window.location.href = "login.html";
+                    // Handle the case where there's no matching account
+                }
+            });
+        }
+        function setLoginCookie(isLoggedIn2) {
+            document.cookie = "login=" + isLoggedIn2;
+        }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

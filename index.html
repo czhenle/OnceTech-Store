@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link href="images/logo2.png" rel="shortcut icon">
+  <title>Onces Tech Store | Home</title>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', Times, serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+      background-image: url('images/background.jpg');
+      background-repeat: inherit;
+      background-position: center;
+      background-attachment: fixed;
+
+    }
+
+    .wrapper {
+      position: fixed;
+      bottom: 50px;
+      right: -370px;
+      max-width: 345px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 15px 25px 22px;
+      transition: right 0.3s ease;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .wrapper.show {
+      right: 20px;
+    }
+
+    .wrapper header {
+      display: flex;
+      align-items: center;
+      column-gap: 15px;
+    }
+
+    header i {
+      color: #7e9aea;
+      font-size: 32px;
+    }
+
+    header h2 {
+      color: #4070f4;
+      font-weight: 500;
+    }
+
+    .wrapper .data {
+      margin-top: 16px;
+    }
+
+    .wrapper .data p {
+      color: #333;
+      font-size: 16px;
+    }
+
+    .data p a {
+      color: #4070f4;
+      text-decoration: none;
+    }
+
+    .data p a:hover {
+      text-decoration: underline;
+    }
+
+    .wrapper .buttons {
+      margin-top: 16px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .buttons .button {
+      border: none;
+      color: #fff;
+      padding: 8px 0;
+      border-radius: 4px;
+      background: #4070f4;
+      cursor: pointer;
+      width: calc(100% / 2 - 10px);
+      transition: all 0.2s ease;
+    }
+
+    .buttons #acceptBtn:hover {
+      background-color: #034bf1;
+    }
+
+    #declineBtn {
+      border: 2px solid #4070f4;
+      background-color: #fff;
+      color: #4070f4;
+    }
+
+    #declineBtn:hover {
+      background-color: #4070f4;
+      color: #fff;
+    }
+
+    .containerProducts {
+      background-color: rgba(220, 224, 243, 0.8);
+      padding: 50px;
+      border-radius: 50px;
+    }
+
+    .containerPerks {
+      background-color: rgba(220, 224, 243, 0.8);
+      padding: 50px;
+      border-radius: 50px;
+      text-align: center;
+      width: 75%;
+      margin: 0 auto;
+    }
+
+    .container footer {
+      background-color: #000000;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .navbar {
+      background-color: #000000;
+      height: 90px;
+      /* Bootstrap blue */
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: white !important;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(172, 190, 218, 0.8), rgba(13, 110, 253, 0.8)), url('images/logo.png') center;
+      height: 30vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #000000;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    /* Product Section */
+    #products {
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    #products h2 {
+      font-weight: bold;
+    }
+
+    /* Scroll wrapper */
+    .product-scroll {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      gap: 40px;
+      /* Increased gap between products */
+      scroll-behavior: smooth;
+      /* smooth horizontal scroll */
+    }
+
+    /* Individual product card */
+    .product-card {
+      width: 440px;
+      /* Increased width */
+      flex: 0 0 auto;
+      border: none;
+      border-radius: 20px;
+      /* More rounded corners */
+      box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.14);
+      transition: transform 0.3s ease;
+      margin-bottom: 30px;
+      /* More space below cards */
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+    }
+
+    /* Product images */
+    .product-card img {
+      height: 320px;
+      /* Increased image height */
+      object-fit: cover;
+      /* crop nicely without distortion */
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    /* Card body */
+    .product-card .card-body {
+      font-size: 1.25rem;
+      /* Larger text */
+      padding: 2rem 1.25rem;
+    }
+
+    .sustainability-section h2 {
+      font-size: 2.2rem;
+    }
+
+    .sustainability-section .card {
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .sustainability-section .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .sustainability-section .card-img {
+      height: 300px;
+      object-fit: cover;
+    }
+
+
+    .btn-primary:hover {
+      background-color: #0b5ed7;
+      border-color: #0a58ca;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .product-card {
+        width: 98vw;
+        margin: auto;
+      }
+
+      .product-card img {
+        height: 200px;
+      }
+
+      .product-scroll {
+        gap: 20px;
+        /* Slightly smaller gap on mobile */
+      }
+    }
+
+    /* Reduce horizontal gap between carousel slides */
+    .carousel-inner .row.g-2 {
+      --bs-gutter-x: 0.5rem !important;
+      /* Even smaller gap */
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="images/logo2.png" alt="Logo" width="40" height="32" class="me-2 rounded">
+        <span class="fw-bold">OncesTech</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#products">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cart.html">Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="accountLink" title="Account/Login">
+              <i class="fa-solid fa-user"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div>
+      <h1>Welcome to OncesTech Store</h1>
+      <p>Affordable and reliable computer accessories at your fingertips</p>
+      <a href="#products" class="btn btn-secondary">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- Featured Deals Section -->
+  <!-- Featured Deals Carousel -->
+  <section class="container-fluid my-5 px-0">
+    <div class="d-flex justify-content-center">
+      <div style="background:#e3f2fd; border-radius:18px; display:inline-block; padding:0.5rem 2.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+        <h2 class="text-center text-success mb-0" style="font-weight:bold;">🔥 Featured Deals</h2>
+      </div>
+    </div>
+    <div id="dealsCarousel" class="carousel slide mt-4 mb-5" data-bs-ride="carousel" data-bs-interval="3500">
+
+      <!-- Indicators -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#dealsCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+          aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#dealsCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      </div>
+
+      <div class="carousel-inner">
+        <!-- First Slide -->
+        <div class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="col-md-6 d-flex justify-content-end">
+              <div class="card product-card shadow rounded-4" style="max-width: 400px; margin: 0 10px;">
+                <img src="images/mice-aula.jpg" class="card-img-top rounded-top-4" alt="Gaming Mouse"
+                  style="height:340px; object-fit:cover;">
+                <div class="card-body text-center">
+                  <h3 class="card-title">Gaming Mouse <span class="badge bg-danger ms-2">20% Off</span></h3>
+                  <p class="card-text fs-5 text-muted">High precision, RGB lighting, and ergonomic design for pro
+                    gamers.</p>
+                  <a href="promotions.html" class="btn btn-success btn-lg w-50">Buy Now</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-start">
+              <div class="card product-card shadow rounded-4" style="max-width: 400px; margin: 0 10px;">
+                <img src="images/kb-F98.jpg" class="card-img-top rounded-top-4" alt="Mechanical Keyboard"
+                  style="height:340px; object-fit:cover;">
+                <div class="card-body text-center">
+                  <h3 class="card-title">Mechanical Keyboard <span class="badge bg-danger ms-2">15% Off</span></h3>
+                  <p class="card-text fs-5 text-muted">Tactile switches, customizable keys, and vibrant backlight.</p>
+                  <a href="promotions.html" class="btn btn-success btn-lg w-50">Buy Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second Slide -->
+        <div class="carousel-item">
+          <div class="row justify-content-center">
+            <div class="col-md-6 d-flex justify-content-end">
+              <div class="card product-card shadow rounded-4" style="max-width: 400px; margin: 0 10px;">
+                <img src="images/promotion3.png" class="card-img-top rounded-top-4" alt="Back to School Sale"
+                  style="height:340px; object-fit:cover;">
+                <div class="card-body text-center">
+                  <h3 class="card-title">Back to School Sale <span class="badge bg-danger ms-2">20% Off</span></h3>
+                  <p class="card-text fs-5 text-muted">Get 20% off on all computer accessories with code
+                    <b>SCHOOL2025</b>.
+                  </p>
+                  <a href="promotions.html" class="btn btn-success btn-lg w-50">Shop Now</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-start">
+              <div class="card product-card shadow rounded-4" style="max-width: 400px; margin: 0 10px;">
+                <img src="images/gamingbundle.png" class="card-img-top rounded-top-4" alt="Gaming Bundle"
+                  style="height:340px; object-fit:cover;">
+                <div class="card-body text-center">
+                  <h3 class="card-title">Gaming Bundle <span class="badge bg-danger ms-2">15% Off</span></h3>
+                  <p class="card-text fs-5 text-muted">Buy a gaming mouse and keyboard together and save 15%. Discount
+                    automatically applied at checkout.</p>
+                  <a href="promotions.html" class="btn btn-success btn-lg w-50">Grab Bundle</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#dealsCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#dealsCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </section>
+
+
+
+  <section class="benefits-section text-center text-white py-5" style="background-color:#0a2a43;">
+    <div class="container">
+      <!-- Heading -->
+      <h5 class="mb-2">Why Choose OncesTech Store?</h5>
+      <h2 class="fw-bold mb-3">We Make Tech Simple & Reliable</h2>
+      <p class="mb-4">From premium accessories to excellent support, we ensure the best shopping experience for every
+        customer.</p>
+
+      <!-- Cards Row -->
+      <div class="row g-4 justify-content-center">
+        <!-- Card 1 -->
+        <div class="col-md-4">
+          <div class="card bg-dark text-white h-100">
+            <img src="images/delivery.jpg" class="card-img" alt="Free Shipping">
+            <div class="card-img-overlay d-flex align-items-end p-3"
+              style="background:linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+              <h5 class="card-title">Free & Fast Shipping</h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-md-4">
+          <div class="card bg-dark text-white h-100">
+            <img src="images/comp.jpeg" class="card-img" alt="Quality Products">
+            <div class="card-img-overlay d-flex align-items-end p-3"
+              style="background:linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+              <h5 class="card-title">High Quality Accessories</h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-md-4">
+          <div class="card bg-dark text-white h-100">
+            <img src="images/support.jpeg" class="card-img" alt="Customer Support">
+            <div class="card-img-overlay d-flex align-items-end p-3"
+              style="background:linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+              <h5 class="card-title">24/7 Customer Support</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Product Categories -->
+  <section class="containerProducts" id="products">
+    <h2 class="text-center text-primary mb-4"><strong>Shop by Category</strong></h2>
+
+    <!-- Horizontal scroll wrapper -->
+    <div class="product-scroll">
+
+      <div class="card product-card">
+        <img src="images/keyboard.jpeg" class="card-img-top" alt="Keyboard" loading="lazy">
+        <div class="card-body text-center">
+          <h5 class="card-title">Keyboards</h5>
+          <a href="keyboard.html" class="btn btn-primary">View</a>
+        </div>
+      </div>
+
+      <div class="card product-card">
+        <img src="images/mouse.jpg" class="card-img-top" alt="Mouse" loading="lazy">
+        <div class="card-body text-center">
+          <h5 class="card-title">Mice</h5>
+          <a href="mice.html" class="btn btn-primary">View</a>
+        </div>
+      </div>
+
+      <div class="card product-card">
+        <img src="images/mic.jpeg" class="card-img-top" alt="Mic" loading="lazy">
+        <div class="card-body text-center">
+          <h5 class="card-title">Audio</h5>
+          <a href="audio.html" class="btn btn-primary">View</a>
+        </div>
+      </div>
+
+      <div class="card product-card">
+        <img src="images/headset.jpeg" class="card-img-top" alt="Headset" loading="lazy">
+        <div class="card-body text-center">
+          <h5 class="card-title">Headsets</h5>
+          <a href="headset.html" class="btn btn-primary">View</a>
+        </div>
+      </div>
+
+      <div class="card product-card">
+        <img src="images/monitor.jpg" class="card-img-top" alt="Monitor" loading="lazy">
+        <div class="card-body text-center">
+          <h5 class="card-title">Monitor</h5>
+          <a href="monitor.html" class="btn btn-primary">View</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="containerPerks my-5">
+    <h2 class="mb-4 fw-bold">THE PERKS OF OUR STORE</h2>
+    <div class="row g-4">
+      <div class="col-md-3 col-6">
+        <i class="fas fa-truck fa-3x text-primary mb-3"></i>
+        <h6>Free Standard Shipping</h6>
+      </div>
+      <div class="col-md-3 col-6">
+        <i class="fas fa-undo fa-3x text-primary mb-3"></i>
+        <h6>Risk-Free Return</h6>
+      </div>
+      <div class="col-md-3 col-6">
+        <i class="fas fa-bolt fa-3x text-primary mb-3"></i>
+        <h6>Day-One Availability</h6>
+      </div>
+      <div class="col-md-3 col-6">
+        <i class="fas fa-shopping-bag fa-3x text-primary mb-3"></i>
+        <h6>Exclusive Gear Selection</h6>
+      </div>
+      <div class="col-md-3 col-6">
+        <i class="fas fa-gem fa-3x text-primary mb-3"></i>
+        <h6>Rewards as You Shop</h6>
+      </div>
+      <div class="col-md-3 col-6">
+        <i class="fas fa-tags fa-3x text-primary mb-3"></i>
+        <h6>Special Perks & Privileges</h6>
+      </div>
+      <div class="col-md-3 col-6">
+        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+        <h6>Up to 6-Months Warranty</h6>
+      </div>
+      <div class="col-md-3 col-6">
+        <i class="fas fa-headset fa-3x text-primary mb-3"></i>
+        <h6>24/7 Customer Support</h6>
+      </div>
+    </div>
+  </section>
+
+  <section class="container my-5">
+    <h2 class="text-center text-primary mb-4">📍 We Are Here</h2>
+    <div class="container">
+      <div class="row animate-on-scroll fade-in">
+        <div class="col-12">
+          <div class="map-container shadow-lg rounded">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15913.619570357996!2d101.1176222!3d4.3348363!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cb1d573f9aabf3%3A0x28cc06c069e40dce!2sUniversiti%20Tunku%20Abdul%20Rahman%20Kampar%20Campus!5e0!3m2!1sen!2smy!4v1681116688392!5m2!1sen!2smy"
+              width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="container-fluid bg-dark text-white py-4" id="contact">
+    <div class="container">
+      <div class="row align-items-center text-center text-md-start">
+
+        <div class="col-md-4 mb-3">
+          <a href="#"
+            class="d-flex align-items-center justify-content-center justify-content-md-start text-white text-decoration-none">
+            <img src="images/logo2.png" width="80" height="60" alt="logo" class="me-2 rounded">
+            <span class="h5 mb-0 fw-bold">OncesTech Store</span>
+          </a>
+          <p class="small mt-2">Your trusted store for affordable and reliable computer accessories.</p>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <h6 class="text-uppercase text-warning">Contact Us</h6>
+          <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> Kampar, 31350, Perak</p>
+          <p class="mb-1"><i class="fas fa-envelope me-2"></i> support@oncestech.com</p>
+          <p class="mb-1"><i class="fas fa-phone me-2"></i> +60 12-345 6789</p>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <h6 class="text-uppercase text-warning">Follow Us</h6>
+          <div>
+            <a href="https://www.facebook.com/profile.php?id=61579724109309" class="text-white me-3"><i
+                class="fab fa-facebook fa-lg"></i></a>
+            <a href="oncestech@gmail.com" class="text-white me-3"><i class="fab fa-google fa-lg"></i></a>
+            <a href="https://www.instagram.com/oncestech_official_store?igsh=azFvejZxbmRjcnZn"
+              class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+          </div>
+          <div class="mt-3">
+            <div class="fb-share-button" data-href="https://your-website-url.com" data-layout="button_count"
+              data-size="small">
+              <a target="_blank"
+                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyour-website-url.com%2F&amp;src=sdkpreparse"
+                class="fb-xfbml-parse-ignore">Share Us On facebook</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <hr class="bg-light">
+      <p class="text-center small mb-0">© 2025 OncesTech Store. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Cookie Consent Banner -->
+  <div class="wrapper">
+    <header>
+      <i class="bx bx-cookie"></i>
+      <h2><b>Have A Cookie</b></h2>
+    </header>
+    <div class="data">
+      <p>This website use cookies to help you have a superior and more relevant browsing experience on the website. <a
+          href="#"> Read more...</a></p>
+    </div>
+    <div class="buttons">
+      <button class="button" id="acceptBtn">Accept</button>
+      <button class="button" id="declineBtn">Decline</button>
+    </div>
+  </div>
+
+
+  <!-- Font Awesome (for social icons) -->
+  <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+  <script>
+    // Utility to set a cookie
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
+    }
+
+    // Utility to get a cookie value by name
+    function getCookie(name) {
+      let nameEQ = name + "=";
+      let ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+      }
+      return null;
+    }
+
+    // Show cookie consent if not accepted
+    const cookieBox = document.querySelector(".wrapper"),
+      buttons = document.querySelectorAll(".button");
+    function showCookieConsent() {
+
+      cookieBox.classList.add("show");
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          cookieBox.classList.remove("show");
+          if (button.id == "acceptBtn") {
+            // Store any value you want in the cookie
+            setCookie("cookieConsent", "accepted", 30); // stores 'accepted' for 30 days
+            setCookie("userPreference", "darkmode", 30); // example: store another value
+          }
+        });
+      });
+    }
+    window.addEventListener("load", showCookieConsent);
+
+  </script>
+  <script>
+    function signout() {
+      document.cookie = "login=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+      alert("You have successfully logged out!");
+
+      location.href = "index.html";
+
+    }
+
+    function signInMessage() {
+      alert("Please Sign In or Register an Account!");
+    }
+
+
+    let login = "";
+    let account = "";
+
+    let cookie = document.cookie;
+
+    for (let i = 0; i < cookie.length; i++) {
+      if (cookie[i] === ";") {
+        cookie = cookie.split(";");
+      }
+    }
+
+    for (let i = 0; i < cookie.length; i++) {
+      let check = cookie[i].split("=");
+
+      if (check[0].trim() === "account-key")
+        account = check[1];
+      else if (check[0].trim() === "login")
+        login = check[1];
+    }
+
+    console.log(login);
+    console.log(account);
+
+    // Account/Login navigation logic
+    document.addEventListener("DOMContentLoaded", function () {
+      // Replace the existing login link with an id for easier selection
+      var navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(function (link) {
+        if (
+          link.querySelector('.fa-user') &&
+          (link.textContent.trim() === "" || link.textContent.trim() === "Account/Login")
+        ) {
+          link.id = "accountLink";
+        }
+      });
+
+      var accountLink = document.getElementById("accountLink");
+      if (accountLink) {
+        accountLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+              let c = ca[i];
+              while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+              if (c.indexOf(nameEQ) == 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+            }
+            return null;
+          }
+          if (getCookie("login") === "true") {
+            window.location.href = "account.html";
+          } else {
+            alert("Please Sign In or Register an Account!");
+            window.location.href = "login.html";
+          }
+        });
+      }
+    });
+
+
+
+  </script>
+</body>
+
+</html>
