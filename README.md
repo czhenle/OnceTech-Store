@@ -17,13 +17,13 @@ A responsive e-commerce web application for tech peripherals and accessories, bu
 
 ---
 
-## About
+## 🏪 About
 
 OnceTech Store is a static front-end e-commerce platform that allows users to browse and purchase tech peripherals including monitors, keyboards, mice, headsets, and audio equipment. The application includes user authentication flows, a shopping cart, checkout process, and a promotions system — all handled client-side using browser local storage.
 
 ---
 
-## Features
+## ✨ Features
 
 - 🛍️ **Product Catalogue** — Dedicated pages for monitors, keyboards, mice, headsets, and audio products
 - 🛒 **Shopping Cart** — Add, remove, and update quantities with persistent cart state via local storage
@@ -35,7 +35,7 @@ OnceTech Store is a static front-end e-commerce platform that allows users to br
 
 ---
 
-## Pages
+## 📄 Pages
 
 | Page | File | Description |
 |------|------|-------------|
@@ -55,7 +55,7 @@ OnceTech Store is a static front-end e-commerce platform that allows users to br
 
 ---
 
-##📁 Project Structure
+## 📁 Project Structure
 
 ```
 OnceTech-Store/
@@ -83,15 +83,15 @@ OnceTech-Store/
 
 ---
 
-##🚀 Getting Started
+## 🚀 Getting Started
 
 No build tools or dependencies required. The project runs entirely in the browser.
 
-### Prerequisites
+### 🔧 Prerequisites
 
 - Any modern web browser (Chrome, Firefox, Edge, Safari)
 
-### Running Locally
+### 💻 Running Locally
 
 1. Clone the repository:
    ```bash
@@ -116,7 +116,7 @@ No build tools or dependencies required. The project runs entirely in the browse
 
 ---
 
-## Usage
+## 📖 Usage
 
 1. Browse product categories from the navigation bar
 2. Click on a product to view details and add it to your cart
@@ -127,7 +127,7 @@ No build tools or dependencies required. The project runs entirely in the browse
 
 ---
 
-## Technologies Used
+## 🛠️ Technologies Used
 
 | Technology | Purpose |
 |------------|---------|
@@ -138,6 +138,6 @@ No build tools or dependencies required. The project runs entirely in the browse
 
 ---
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
