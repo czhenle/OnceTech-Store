@@ -55,7 +55,7 @@ OnceTech Store is a static front-end e-commerce platform that allows users to br
 
 ---
 
-## Project Structure
+##📁 Project Structure
 
 ```
 OnceTech-Store/
@@ -83,7 +83,7 @@ OnceTech-Store/
 
 ---
 
-## Getting Started
+##🚀 Getting Started
 
 No build tools or dependencies required. The project runs entirely in the browser.
 
